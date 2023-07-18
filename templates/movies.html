@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movies - MovieWeb App</title>
+</head>
+<body>
+  <h1>{{ username }}'s Favorite Movies</h1>
+  <ul>
+    {% for movie_id, movie_info in movies.items() %}
+    <li>
+      <h3>{{ movie_info['name'] }}</h3>
+      <p>Rating: {{ movie_info['rating'] }}</p>
+      <p>Director: {{ movie_info['director'] }}</p>
+      <p>Release Year: {{ movie_info['year'] }}</p>
+      <form action="/users/{{ user_id }}/delete_movie/{{ movie_id }}" method="post">
+        <input type="submit" value="Delete">
+      </form>
+    </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

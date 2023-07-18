@@ -1,0 +1,93 @@
+{
+    "1": {
+        "name": "Alice",
+        "movies": {
+            "1": {
+                "name": "Inception",
+                "director": "Christopher Nolan",
+                "year": 2010,
+                "rating": 8.8
+            },
+            "2": {
+                "name": "The Dark Knight",
+                "director": "Christopher Nolan",
+                "year": 2008,
+                "rating": 9.0
+            }
+        }
+    },
+    "2": {
+        "name": "Bob",
+        "movies": {
+            "1": {
+                "name": "Inception",
+                "director": "Christopher Nolan",
+                "year": 2010,
+                "rating": 8.8
+            },
+            "2": {
+                "name": "The Dark Knight",
+                "director": "Christopher Nolan",
+                "year": 2008,
+                "rating": 9.0
+            }
+        }
+    },
+    "3": {
+        "name": "Charlie",
+        "movies": {
+            "2": {
+                "name": "Fight Club",
+                "director": "David Fincher",
+                "year": 1999,
+                "rating": 8.8
+            },
+            "3": {
+                "name": "Home Alone",
+                "director": "Chris Columbus",
+                "year": "1990",
+                "rating": "7.7"
+            },
+            "4": {
+                "name": "Pulp Fiction",
+                "director": "Quentin Tarantino",
+                "year": "1994",
+                "rating": "8.9"
+            },
+            "5": {
+                "name": "The Scream",
+                "director": "Rick Schiaffo",
+                "year": "2009",
+                "rating": "5.3"
+            }
+        }
+    },
+    "7": {
+        "name": "Dave",
+        "movies": {
+            "1": {
+                "name": "The Shawshank Redemption",
+                "director": "Frank Darabont",
+                "year": 1994,
+                "rating": 9.3
+            },
+            "2": {
+                "name": "The Godfather",
+                "director": "Francis Ford Coppola",
+                "year": 1972,
+                "rating": 9.2
+            }
+        }
+    },
+    "8": {
+        "name": "Yaeli",
+        "movies": {
+            "1": {
+                "name": "Home Alone",
+                "director": "Chris Columbus",
+                "year": "1990",
+                "rating": "7.7"
+            }
+        }
+    }
+}
