@@ -4,6 +4,16 @@
   <title>Add New Movie - MovieWeb App</title>
 </head>
 <body>
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <ul class="flash-messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
   <h1>Add New Movie</h1>
   <form action="/users/{{ user_id }}/add_movie" method="post">
     <label for="name">Movie Name:</label>
