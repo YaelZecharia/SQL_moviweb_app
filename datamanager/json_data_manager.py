@@ -2,12 +2,17 @@ import json
 import os
 from .data_manager_interface import DataManagerInterface
 from helpers.api_helpers import MovieAPI
+import bcrypt
 
 movie_api = MovieAPI
 
 
 # Define our custom Exceptions
 class UserNotFoundError(Exception):
+    pass
+
+
+class WrongPassword(Exception):
     pass
 
 
@@ -87,6 +92,20 @@ class JSONDataManager(DataManagerInterface):
         if user_info:
             return user_info.get("name")
 
+    def get_userinfo_by_id(self, user_id, users):
+        """
+        Retrieve the userinfo associated with a specific user ID.
+
+        Args:
+            user_id (str): The ID of the user.
+
+        Returns:
+            dict: The user info associated with the user ID.
+        """
+        users_info = users
+        user_info = users_info.get(str(user_id))
+        return user_info
+
     def get_user_movies(self, user_id):
         """
         Retrieve the movies associated with a specific user ID.
@@ -134,12 +153,30 @@ class JSONDataManager(DataManagerInterface):
         movie_info = movies[str(movie_id)]
         return movie_info
 
-    def add_user(self, user_name):
+    @staticmethod
+    def create_user_password(password, confirm_password):
+        """
+        Checking that password is at least 8 characters and same as confirm_password
+         Then hashing the password.
+         return the hashed password
+        """
+        salt = bcrypt.gensalt()
+        if password != confirm_password:
+            raise TypeError("passwords don't match!")
+        if len(password) < 8:
+            raise WrongPassword("Password needs to be at least 8 characters")
+        password = password.encode("utf-8")
+        hashed_password = bcrypt.hashpw(password, salt).decode("utf-8")
+        return hashed_password
+
+    def add_user(self, user_name, password, confirm_password):
         """
         Add a new user.
 
         Args:
             user_name (str): The name of the new user.
+            password (str): The users password
+            confirm_password (str): Confirmation of password
 
         Returns:
             users_data (dict): All user data after the addition of the new user.
@@ -158,8 +195,11 @@ class JSONDataManager(DataManagerInterface):
         existing_ids = [int(user_id) for user_id in users_data.keys()]
         next_id = max(existing_ids) + 1 if existing_ids else 1
 
+        hashed_pass = self.create_user_password(password, confirm_password)
+
         new_user_info = {
             "name": user_name,
+            "password": hashed_pass,
             "movies": {}
         }
 
@@ -169,6 +209,17 @@ class JSONDataManager(DataManagerInterface):
         self.save_new_data(users_data)
 
         return users_data
+
+    @staticmethod
+    def authenticate_user(user_pass, hashed_pass):
+        """
+        Checks that the password the user entered on the website
+        matches the password that is stored in the json file
+        """
+        if bcrypt.checkpw(user_pass.encode("utf-8"), hashed_pass.encode("utf-8")):
+            return
+        else:
+            raise WrongPassword
 
     def add_movie(self, user_id, title):
         """

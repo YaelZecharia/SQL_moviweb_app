@@ -16,6 +16,9 @@
                 <ul>
                     <li><a href="/">HOME</a></li>
                     <li><a href="/users">USERS</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li>Welcome, {{ current_user.name }}! <a href="/logout">Logout</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
@@ -33,9 +36,9 @@
       <h1>Users</h1>
       <div class="users-display">
           <ul>
-            {% for user_id, info in users.items() %}
-            <li><a href="/users/{{ user_id }}">{{ info['name'] }}</a></li>
-            {% endfor %}
+                {% for user_id, info in users.items() %}
+                    <li><a href="/login/{{ user_id }}">{{ info['name'] }}</a></li>
+                {% endfor %}
           </ul>
       </div>
       <div class="new-object">

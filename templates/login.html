@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <title>Add New User - MovieWeb App</title>
+    <title>Login - MovieWeb App</title>
 </head>
 <body>
     <section class="header">
@@ -33,15 +33,11 @@
                 {% endif %}
             {% endwith %}
         </div>
-        <h1>Add New User</h1>
-        <form action="/add_user" method="post">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required><br>
+        <h1>Login for {{ user_name }}</h1>
+        <form action="" method="POST">
             <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
-            <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required><br>
-            <input type="submit" value="Add User">
+            <input type="password" id="password" name="password" required>
+            <input type="submit" value="Login">
         </form>
     </section>
 </body>

@@ -17,7 +17,7 @@ class DataManagerInterface(ABC):
         pass
 
     @abstractmethod
-    def add_user(self, user_name):
+    def add_user(self, user_name, password, confirm_password):
         # Input: This method takes one argument: user_name.
         pass
 

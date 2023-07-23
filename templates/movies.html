@@ -16,6 +16,9 @@
                 <ul>
                     <li><a href="/">HOME</a></li>
                     <li><a href="/users">USERS</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li>Welcome, {{ current_user.name }}! <a href="/logout">Logout</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>

@@ -16,9 +16,21 @@
                 <ul>
                     <li><a href="/">HOME</a></li>
                     <li><a href="/users">USERS</a></li>
+                    {% if current_user.is_authenticated %}
+                        <li>Welcome, {{ current_user.name }}! <a href="/logout">Logout</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </nav>
+        <div id="flash-messages" class="flashes">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
 	</section>
     <div class="text-box">
          <h1>Welcome to my movies Web-App</h1>
@@ -28,4 +40,20 @@
 
     </div>
 </body>
+<script>
+    // Function to remove flashed messages after a certain duration (in milliseconds)
+    function removeFlashMessages() {
+        var flashMessages = document.querySelectorAll(".flash-message");
+        flashMessages.forEach(function (message) {
+            setTimeout(function () {
+                message.remove();
+            }, 5000); // Adjust the duration (in milliseconds) to change how long the messages are displayed
+        });
+    }
+
+    // Call the function to remove flashed messages after the page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        removeFlashMessages();
+    });
+</script>
 </html>
