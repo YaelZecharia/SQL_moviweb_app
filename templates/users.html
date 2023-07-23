@@ -1,24 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
+  	<meta name="viewport" content="with=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;600;700&display=swap" rel="stylesheet">
   <title>Users - MovieWeb App</title>
 </head>
 <body>
-  <!-- Flash Messages -->
-  {% with messages = get_flashed_messages() %}
-    {% if messages %}
-      <ul class="flash-messages">
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  <h1>Users</h1>
-  <ul>
-    {% for user_id, info in users.items() %}
-    <li><a href="/users/{{ user_id }}">{{ info['name'] }}</a></li>
-    {% endfor %}
-  </ul>
+    <section class="header">
+        <h1>MY MOVIES WEB-APP</h1>
+        <nav>
+            <div class="nav-links">
+                <ul>
+                    <li><a href="/">HOME</a></li>
+                    <li><a href="/users">USERS</a></li>
+                </ul>
+            </div>
+        </nav>
+	</section>
+  <section class="page-display">
+      <div id="flash-messages" class="flashes">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+      </div>
+      <h1>Users</h1>
+      <div class="users-display">
+          <ul>
+            {% for user_id, info in users.items() %}
+            <li><a href="/users/{{ user_id }}">{{ info['name'] }}</a></li>
+            {% endfor %}
+          </ul>
+      </div>
+      <div class="new-object">
+          <a href="/add_user" class="new-user-btn">If you are a new user, please click here.</a>
+      </div>
+  </section>
 </body>
+<script>
+    // Function to remove flashed messages after a certain duration (in milliseconds)
+    function removeFlashMessages() {
+        var flashMessages = document.querySelectorAll(".flash-message");
+        flashMessages.forEach(function (message) {
+            setTimeout(function () {
+                message.remove();
+            }, 5000); // Adjust the duration (in milliseconds) to change how long the messages are displayed
+        });
+    }
+
+    // Call the function to remove flashed messages after the page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        removeFlashMessages();
+    });
+</script>
 </html>

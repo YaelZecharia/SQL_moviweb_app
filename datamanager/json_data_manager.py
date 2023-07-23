@@ -6,6 +6,7 @@ from helpers.api_helpers import MovieAPI
 movie_api = MovieAPI
 
 
+# Define our custom Exceptions
 class UserNotFoundError(Exception):
     pass
 
@@ -21,17 +22,25 @@ class MovieAlreadyExists(Exception):
 class ProblemFetchingInfo(Exception):
     pass
 
+
 class MovieNotFound(Exception):
     pass
 
 
+# JSONDataManager class inheriting from the DataManagerInterface
 class JSONDataManager(DataManagerInterface):
+
     def __init__(self, filename):
+        """Initializes the JSONDataManager with the filename of the data"""
         self.filename = filename
 
     def get_all_users(self):
-        """ Input: This method takes no arguments
-        Output: returns a list of dictionaries representing users """
+        """
+        Retrieves all users from the JSON data file.
+
+        Returns:
+            users_data (dict): All user data.
+        """
         data_dir = os.path.join(os.path.dirname(__file__), "../data")
         file_path = os.path.join(data_dir, self.filename)
 
@@ -41,18 +50,36 @@ class JSONDataManager(DataManagerInterface):
         return users_data
 
     def save_new_data(self, users_data):
-        """ Input: This method takes no arguments
-        Output: returns a list of dictionaries representing users """
+        """
+        Saves the provided user data to the JSON data file.
+
+        Args:
+            users_data (dict): The user data to save.
+
+        Returns:
+            users_data (dict): The same user data that was provided.
+        """
         data_dir = os.path.join(os.path.dirname(__file__), "../data")
         file_path = os.path.join(data_dir, self.filename)
+
         with open(file_path, 'w') as file:
             json.dump(users_data, file, indent=4)
 
         return users_data
 
     def get_username_by_id(self, user_id):
-        """Input: user_id (str or int)
-           Output: Returns the username associated with the given user_id or None if not found"""
+        """
+        Retrieve the username associated with a specific user ID.
+
+        Args:
+            user_id (str): The ID of the user.
+
+        Returns:
+            str: The username associated with the user ID.
+
+        Raises:
+            UserNotFoundError: If no user is associated with the user ID.
+        """
         users_data = self.get_all_users()
         if str(user_id) not in users_data:
             raise UserNotFoundError(f"User ID {user_id} does not exist")
@@ -61,9 +88,18 @@ class JSONDataManager(DataManagerInterface):
             return user_info.get("name")
 
     def get_user_movies(self, user_id):
-        """ Input: This method takes one argument: user_id.
-         Output: This method returns a list of movies for the given user.
-         Each movie should be a dictionary with details about the movie. """
+        """
+        Retrieve the movies associated with a specific user ID.
+
+        Args:
+            user_id (str): The ID of the user.
+
+        Returns:
+            dict: The movies associated with the user ID.
+
+        Raises:
+            UserNotFoundError: If no user is associated with the user ID.
+        """
         users_data = self.get_all_users()
         if str(user_id) not in users_data:
             raise UserNotFoundError(f"User ID {user_id} does not exist")
@@ -75,8 +111,21 @@ class JSONDataManager(DataManagerInterface):
         return movies
 
     def get_movie_by_id(self, user_id, movie_id):
+        """
+        Retrieve movie info by movie ID for a specific user.
+
+        Args:
+            user_id (str): The ID of the user.
+            movie_id (str): The ID of the movie.
+
+        Returns:
+            movie_info (dict): Movie details.
+
+        Raises:
+            UserNotFoundError: If no user is associated with the user ID.
+            MovieNotFound: If no movie is associated with the movie ID.
+        """
         users_data = self.get_all_users()
-        # Check if user_id exists in users_data
         if str(user_id) not in users_data:
             raise UserNotFoundError(f"User ID {user_id} does not exist")
         movies = self.get_user_movies(user_id)
@@ -86,6 +135,18 @@ class JSONDataManager(DataManagerInterface):
         return movie_info
 
     def add_user(self, user_name):
+        """
+        Add a new user.
+
+        Args:
+            user_name (str): The name of the new user.
+
+        Returns:
+            users_data (dict): All user data after the addition of the new user.
+
+        Raises:
+            UserAlreadyExists: If the username already exists.
+        """
         users_data = self.get_all_users()
 
         # Check if the username already exists in users_data
@@ -110,6 +171,21 @@ class JSONDataManager(DataManagerInterface):
         return users_data
 
     def add_movie(self, user_id, title):
+        """
+        Add a new movie for a specific user.
+
+        Args:
+            user_id (str): The ID of the user.
+            title (str): The title of the movie.
+
+        Returns:
+            users_data (dict): All user data after the addition of the new movie.
+
+        Raises:
+            UserNotFoundError: If no user is associated with the user ID.
+            MovieAlreadyExists: If the movie already exists in the user's movie list.
+            ProblemFetchingInfo: If there is a problem fetching movie info from the API.
+        """
         users_data = self.get_all_users()
         # Check if user_id exists in users_data
         if str(user_id) not in users_data:
@@ -143,6 +219,20 @@ class JSONDataManager(DataManagerInterface):
         return users_data
 
     def update_movie(self, user_id, movie_id, updated_movie_data):
+        """
+        Update a movie's details for a specific user.
+
+        Args:
+            user_id (str): The ID of the user.
+            movie_id (str): The ID of the movie.
+            updated_movie_data (dict): The updated movie details.
+
+        Returns:
+            users_data (dict): All user data after updating the movie.
+
+        Raises:
+            UserNotFoundError: If no user is associated with the user ID.
+        """
         users_data = self.get_all_users()
         # Check if user_id exists in users_data
         if str(user_id) not in users_data:
@@ -155,6 +245,20 @@ class JSONDataManager(DataManagerInterface):
         return users_data
 
     def delete_movie(self, user_id, movie_id):
+        """
+        Delete a movie from a specific user's list.
+
+        Args:
+            user_id (str): The ID of the user.
+            movie_id (str): The ID of the movie.
+
+        Returns:
+            users_data (dict): All user data after deleting the movie.
+
+        Raises:
+            UserNotFoundError: If no user is associated with the user ID.
+            MovieNotFound: If the movie is not found in the user's movie list.
+        """
         users_data = self.get_all_users()
         # Check if user_id exists in users_data
         if str(user_id) not in users_data:

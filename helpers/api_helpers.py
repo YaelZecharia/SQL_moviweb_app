@@ -28,21 +28,17 @@ class MovieAPI:
                 year = movie_data["Year"]
                 rating = movie_data["imdbRating"]
                 director = movie_data["Director"]
+                poster = movie_data["Poster"]
 
                 new_movie = {
                     "name": movie_title,
                     "director": director,
                     "year": year,
-                    "rating": rating
+                    "rating": rating,
+                    "poster": poster
                 }
                 return new_movie
             else:
                 return None
         except requests.exceptions.RequestException:
             return None
-
-
-# new_movie = MovieAPI.fetch_movie_info("Home Alone")
-#
-# print(new_movie)
-# THIS IS WORKING! PROBLEM NOT HERE!

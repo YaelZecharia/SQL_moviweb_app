@@ -1,0 +1,254 @@
+
+.flashes{
+    color: red;
+    font-size: 20px;
+    text-align: center;
+    float: right;
+    top: 100px;
+    right: 20px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Signika Negative', sans-serif;
+}
+
+input:focus {
+    background-color : #E9D6AF;
+    color : #802301;
+}
+
+.main-page-header{
+    min-height: 100vh;
+    width: 100%;
+    background-image: url("../static/images/popcorn2.jpg");
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.header{
+    min-height: 10vh;
+    width: 100%;
+    background-image: url("../static/images/popcorn-small.jpg");
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.header h1 {
+    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+    font-size: 56px;
+    font-weight: bold;
+    text-align: left;
+    color: #802301;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+nav{
+    display: flex;
+    padding: 2% 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links{
+    flex: 1;
+    text-align: right;
+}
+
+.nav-links ul li{
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+    background-color: #802301;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.nav-links ul li a{
+    color: #FEFAE1;
+    text-decoration: none;
+    font-size: 15px;
+    background-color: #802301;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.nav-links ul li:hover {
+    background-color: #C89E48;
+}
+
+.text-box{
+    width: 90%;
+    color: #802301;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    background-color: #FEFAE1;
+}
+
+.text-box h1{
+    font-size: 60px;
+}
+
+.text-box p{
+    font-size: 18px;
+    margin: 10px 0 20px;
+}
+
+.new-user-btn{
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    color: #802301;
+    border: 1px solid #802301;
+    padding: 10px 30px;
+    font-size: 15px;
+    background-color: #CDAA63;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.page-display{
+    background-color: #FEFAE1;
+    color: #802301;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.page-display h1{
+    font-size: 60px;
+    text-align: center;
+}
+
+.users-display ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.users-display li {
+    list-style: none;
+    padding: 8px 12px;
+    background-color: #802301;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 50px;
+    width: 50px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.users-display li a {
+    color: #FEFAE1;
+    text-decoration: none;
+    font-size: 22px;
+}
+
+.movie-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px; /* Adjust this to change the space between the poster and the info */
+}
+
+.movies-grid {
+    display: grid;
+    gap: 50px;
+    justify-items: center;
+    align-items: start;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+}
+
+.movie-poster img {
+    width: 170px;
+    height: auto;
+}
+
+.movie-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-object {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    background-color : #E9D6AF;
+    color : #802301;
+    margin-bottom: 10px;
+    border: 2px solid #802301;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+label {
+    width: 100px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+    background-color: #802301;
+    border: none;
+    color: #FEFAE1;
+    padding: 8px 16px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.add-movie-form {
+    width: 700px;
+    margin: 30px 30px;
+    padding: 10px;
+}
+
+.add-movie-form label {
+    display: inline-block;
+    margin: 5px;
+    white-space: nowrap;
+}
+
+.add-movie-form input[type="text"] {
+    width: 300px;
+    padding: 3px;
+    margin: 10px;
+    color: #000;
+}
+
+.add-movie-form input[type="text"]::placeholder {
+    color: #aaa;
+}
+
+.add-movie-form input[type="submit"] {
+    padding: 5px 5px;
+    background-color: #802301;
+    color: #FEFAE1;
+    border: none;
+    cursor: pointer;
+}
