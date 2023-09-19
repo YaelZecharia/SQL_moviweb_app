@@ -1,44 +1,47 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-	<meta name="viewport" content="with=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="../static/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="with=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;600;700&display=swap" rel="stylesheet">
     <title>MY MOVIES WEB-APP</title>
 </head>
+
 <body>
-    <section class="main-page-header">
+    <header>
+        <h1>MY MOVIES WEB-APP</h1>
         <nav>
-            <div class="nav-links">
                 <ul>
                     <li><a href="/">HOME</a></li>
                     <li><a href="/users">USERS</a></li>
                     {% if current_user.is_authenticated %}
+                        {% set base_url = "/users/" %}
+                        {% set path = current_user.id %}
+                        <li><a href="{{ base_url ~ path }}">MOVIES</a></li>
                         <li>Welcome, {{ current_user.name }}! <a href="/logout">Logout</a></li>
                     {% endif %}
                 </ul>
-            </div>
         </nav>
-        <div id="flash-messages" class="flashes">
+    </header>
+    <main>
+        <div class="notification">
             {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="flash-message">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
             {% endwith %}
         </div>
-	</section>
-    <div class="text-box">
-         <h1>Welcome to my movies Web-App</h1>
-         <p>In this app each user can keep track of their favorite movies.<br>
-             You can add and delete movies, and also edit the info for each movie!</p>
-         <a href="/add_user" class="new-user-btn">If you are a new user, please click here.</a>
-
-    </div>
+        <section class="intro">
+            <h1 class="big-heading">Welcome to my movies Web-App</h1>
+            <p>In this app each user can keep track of their favorite movies.<br>
+                You can add and delete movies, and also edit the info for each movie!</p>
+            <a href="/add_user" class="btn">If you are a new user, please click here.</a>
+        </section>
+    </main>
 </body>
 <script>
     // Function to remove flashed messages after a certain duration (in milliseconds)

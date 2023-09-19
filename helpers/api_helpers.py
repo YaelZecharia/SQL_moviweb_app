@@ -29,13 +29,15 @@ class MovieAPI:
                 rating = movie_data["imdbRating"]
                 director = movie_data["Director"]
                 poster = movie_data["Poster"]
+                review = ""
 
                 new_movie = {
                     "name": movie_title,
                     "director": director,
                     "year": year,
                     "rating": rating,
-                    "poster": poster
+                    "poster": poster,
+                    "review": review
                 }
                 return new_movie
             else:

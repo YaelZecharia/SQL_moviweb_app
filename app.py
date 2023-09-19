@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from datamanager.json_data_manager import JSONDataManager, UserNotFoundError, UserAlreadyExists, MovieNotFound, \
-    WrongPassword
 import os
 from dotenv import load_dotenv
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-
+from datamanager.sql_data_manager import SQLiteDataManager, db, Movie, User, UserNotFoundError, UserAlreadyExists, MovieNotFound, \
+    WrongPassword
 from datamanager.user_data_manager import User
 
 # Load environment variables from the .env file
@@ -18,7 +17,10 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 # Initialize the data manager object
-data_manager = JSONDataManager('users_data.json')
+db_path = os.path.join(os.path.dirname(__file__), "data", "database_file.db")
+app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_path}"
+data_manager = SQLiteDataManager(app)
+
 
 # Set flash message duration
 app.config['MESSAGE_FLASHING_OPTIONS'] = {'duration': 5}
@@ -30,7 +32,7 @@ def loader_user(user_id):
     Creating user object from a user in the json file to use for the flask_login
     """
     users = data_manager.get_all_users()
-    user_data = data_manager.get_userinfo_by_id(user_id, users)
+    user_data = data_manager.get_userinfo_by_id(user_id)
     if user_data:
         return User(user_id, user_data)
 
@@ -38,6 +40,7 @@ def loader_user(user_id):
 # Define route for the home page
 @app.route('/')
 def home():
+    users = data_manager.get_all_users()
     return render_template('index.html')
 
 
@@ -92,7 +95,7 @@ def update_movie(user_id, movie_id):
             'poster': movie_info['poster']
         }
         try:
-            data_manager.update_movie(str(user_id), str(movie_id), updated_movie_data)
+            data_manager.update_movie(user_id, movie_id, updated_movie_data)
             return redirect(url_for("user_movies", user_id=user_id))
         except UserNotFoundError as e:
             flash(f"{e}")
@@ -134,8 +137,7 @@ def login(user_id):
     Creating user object for session authentication with flask_login.
     If no exception happen - login the user to the session using 'login_user'
     """
-    users = data_manager.get_all_users()
-    user = data_manager.get_userinfo_by_id(user_id, users)
+    user = data_manager.get_userinfo_by_id(user_id)
 
     if user is not None:
         user_name = user["name"]
@@ -176,9 +178,6 @@ def new_user():
     except UserAlreadyExists:
         flash("User Already Exists!")
         return render_template('add_user.html')
-    except TypeError:
-        flash("Passwords don't match!")
-        return render_template('add_user.html')
     except WrongPassword:
         flash("Password needs to be at least 8 characters")
         return render_template('add_user.html')
@@ -191,6 +190,49 @@ def logout():
     logout_user()
     flash('Logged out successfully!')
     return redirect(url_for('home'))
+
+
+@app.route('/users/<user_id>/add_review/<movie_id>', methods=["POST", "GET"])
+@login_required
+def add_review_route(user_id, movie_id):
+    # If it's a POST request, try to add the review
+    if request.method == "POST":
+        review_text = request.form['review_text']
+        rating = request.form['rating']
+
+        try:
+            data_manager.add_review(user_id, movie_id, review_text, rating)
+            flash("Review added successfully!")
+            return redirect(url_for("user_movies", user_id=user_id))
+        except (UserNotFoundError, MovieNotFound) as e:
+            flash(f"{e}")
+            return redirect(url_for("user_movies", user_id=user_id))
+
+    # If it's a GET request, display the form to add a review
+    else:
+        try:
+            movie_info = data_manager.get_movie_by_id(user_id, movie_id)
+            return render_template('add_review.html', user_id=user_id, movie_id=movie_id, movie_info=movie_info)
+        except (UserNotFoundError, MovieNotFound) as e:
+            # Handle the case when the user or movie is not found
+            flash(f"{e}")
+            return redirect(url_for("user_movies", user_id=user_id))
+
+
+@app.route('/movie_reviews/<int:movie_id>', methods=['GET'])
+def movie_reviews(movie_id):
+    # Fetch the movie from the database using the movie_id
+    movie = Movie.query.get(movie_id)
+
+    if not movie:
+        # Handle the case where the movie doesn't exist
+        flash("Movie not found!")
+        return redirect(url_for('home'))
+
+    # Access the associated reviews
+    reviews = movie.reviews
+
+    return render_template('movie_reviews.html', movie=movie, reviews=reviews)
 
 
 # Start the Flask application

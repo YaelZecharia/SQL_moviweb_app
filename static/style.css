@@ -1,255 +1,214 @@
-
-.flashes{
-    color: red;
-    font-size: 20px;
-    text-align: center;
-    float: right;
-    top: 100px;
-    right: 20px;
-}
-
-*{
+/* Resetting some default padding and margin */
+body, h1, p, ul, li {
     margin: 0;
     padding: 0;
+}
+
+body {
     font-family: 'Signika Negative', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-input:focus {
-    background-color : #E9D6AF;
-    color : #802301;
+header {
+    background-color: #333;
+    color: #f4f4f4;
+    padding: 1rem 0;
 }
 
-.main-page-header{
-    min-height: 100vh;
-    width: 100%;
-    background-image: url("../static/images/popcorn2.jpg");
-    background-position: center;
-    background-size: cover;
-    position: relative;
-}
-
-.header{
-    min-height: 10vh;
-    width: 100%;
-    background-image: url("../static/images/popcorn-small.jpg");
-    background-position: center;
-    background-size: cover;
-    position: relative;
-}
-
-.header h1 {
-    text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
-    font-size: 56px;
-    font-weight: bold;
-    text-align: left;
-    color: #802301;
-    width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-nav{
+nav ul {
     display: flex;
-    padding: 2% 6%;
-    justify-content: space-between;
-    align-items: center;
-    color: #FEFAE1;
-}
-
-.nav-links{
-    flex: 1;
-    text-align: right;
-}
-
-.nav-links ul li{
-    list-style: none;
-    display: inline-block;
-    padding: 8px 12px;
-    position: relative;
-    background-color: #802301;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.nav-links ul li a{
-    color: #FEFAE1;
-    text-decoration: none;
-    font-size: 15px;
-    background-color: #802301;
-    padding: 8px;
-    border-radius: 5px;
-}
-
-.nav-links ul li:hover {
-    background-color: #C89E48;
-}
-
-.text-box{
-    width: 90%;
-    color: #802301;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    text-align: center;
-    background-color: #FEFAE1;
-}
-
-.text-box h1{
-    font-size: 60px;
-}
-
-.text-box p{
-    font-size: 18px;
-    margin: 10px 0 20px;
-}
-
-.new-user-btn{
-    display: inline-block;
-    text-decoration: none;
-    font-weight: bold;
-    color: #802301;
-    border: 1px solid #802301;
-    padding: 10px 30px;
-    font-size: 15px;
-    background-color: #CDAA63;
-    position: relative;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 5px;
-}
-
-.page-display{
-    background-color: #FEFAE1;
-    color: #802301;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-}
-
-.page-display h1{
-    font-size: 60px;
-    text-align: center;
-}
-
-.users-display ul {
     list-style-type: none;
+}
+
+nav li {
+    margin: 0 1.5rem;
+}
+
+nav a, .welcome-text {
+    text-decoration: none;
+    color: #f4f4f4;
+    font-size: 1.1rem;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #FF7A7A;
+}
+
+.welcome-text {
+    color: #FF7A7A;
+    margin-right: 10px;
+}
+
+.notification .flash-message {
+    background-color: #FF7A7A;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin: 1rem;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.intro {
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.intro h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.intro p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.btn {
+    display: inline-block;
+    background-color: #333;
+    color: #f4f4f4;
+    padding: 7px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #FF7A7A;
+}
+
+form label {
+    width: 100px;
+    display: inline-block;
+    margin: 8px;
+}
+
+
+input#review_text {
+    width: 300px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+
+.review-box {
+    background-color: #333;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px #aaa;  /* Subtle shadow */
+}
+
+.review-box h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #FF7A7A;
+}
+
+.review-box p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #f4f4f4;
+}
+
+.reviews-container {
+    max-width: 800px;
+    margin: 0 auto; /* Center the container */
+}
+
+.movies-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
 }
 
-.users-display li {
-    list-style: none;
-    padding: 8px 12px;
-    background-color: #802301;
-    border-radius: 5px;
-    cursor: pointer;
-    height: 50px;
-    width: 50px;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-}
-
-.users-display li a {
-    color: #FEFAE1;
-    text-decoration: none;
-    font-size: 22px;
-}
-
-.movie-item {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 20px; /* Adjust this to change the space between the poster and the info */
-}
-
-.movies-grid {
-    display: grid;
-    gap: 50px;
-    justify-items: center;
-    align-items: start;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 20px;
+.movie-card {
+    flex-basis: calc(40% - 0.5rem);  /* Adjust for 2 movies per line */
+    background-color: #f3f4f6;  /* Light gray background */
+    padding: 1rem;
+    box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
+    border-radius: 8px; /* rounded corners */
 }
 
 .movie-poster img {
-    width: 170px;
-    height: auto;
+    max-width: 170px;  /* Adjust based on your desired size */
+    display: block;
+    margin: 0 auto;
 }
 
 .movie-info {
+    margin: 2rem;
+}
+
+.big-heading {
+    font-size: 3em;  /* Adjust the value as needed */
+    font-weight: bold;
+    margin-bottom: 20px; /* Optional: to give it some spacing below */
+}
+
+.action-form {
+    display: inline-block;
+    margin: 0.5rem;
+}
+
+.center-content {
     display: flex;
     flex-direction: column;
-}
-
-.new-object {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
 
-input {
-    background-color : #E9D6AF;
-    color : #802301;
-    margin-bottom: 10px;
-    border: 2px solid #802301;
-    border-radius: 4px;
-    padding: 2px;
+.page-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
 }
 
-label {
-    width: 100px;
-    display: inline-block;
-    font-weight: bold;
+.user-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
 }
 
-input[type=button], input[type=submit], input[type=reset] {
-    background-color: #802301;
-    border: none;
-    color: #FEFAE1;
-    padding: 8px 16px;
+.user-link {
+    display: block;
     text-decoration: none;
-    margin: 4px 2px;
-    cursor: pointer;
+    color: #333;
+    font-size: 1.4rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid #FF7A7A;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    margin: 10px 0;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
 }
 
-.add-movie-form {
-    width: 700px;
-    margin: 30px 30px;
-    padding: 10px;
+.user-link:hover {
+    background-color: #FF7A7A;
+    color: #f4f4f4;
 }
 
-.add-movie-form label {
-    display: inline-block;
-    margin: 5px;
-    white-space: nowrap;
-}
+/* Responsive tweaks for smaller screens */
+@media screen and (max-width: 600px) {
+    nav ul {
+        flex-direction: column;
+        text-align: center;
+    }
 
-.add-movie-form input[type="text"] {
-    width: 300px;
-    padding: 3px;
-    margin: 10px;
-    color: #000;
-}
-
-.add-movie-form input[type="text"]::placeholder {
-    color: #aaa;
-}
-
-.add-movie-form input[type="submit"] {
-    padding: 5px 5px;
-    background-color: #802301;
-    color: #FEFAE1;
-    border: none;
-    cursor: pointer;
+    nav li {
+        margin: 0.5rem 0;
+    }
 }

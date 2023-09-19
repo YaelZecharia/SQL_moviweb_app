@@ -52,7 +52,8 @@ class JSONDataManager(DataManagerInterface):
         with open(file_path, "r") as file:
             users_data = json.load(file)
 
-        return users_data
+        users_list = [{"id": user_id, "name": data["name"]} for user_id, data in users_data.items()]
+        return users_list
 
     def save_new_data(self, users_data):
         """
@@ -73,26 +74,19 @@ class JSONDataManager(DataManagerInterface):
         return users_data
 
     def get_username_by_id(self, user_id):
-        """
-        Retrieve the username associated with a specific user ID.
+        data_dir = os.path.join(os.path.dirname(__file__), "../data")
+        file_path = os.path.join(data_dir, self.filename)
 
-        Args:
-            user_id (str): The ID of the user.
+        with open(file_path, "r") as file:
+            users_data = json.load(file)
 
-        Returns:
-            str: The username associated with the user ID.
-
-        Raises:
-            UserNotFoundError: If no user is associated with the user ID.
-        """
-        users_data = self.get_all_users()
-        if str(user_id) not in users_data:
+        user = users_data.get(str(user_id))
+        if not user:
             raise UserNotFoundError(f"User ID {user_id} does not exist")
-        user_info = users_data.get(str(user_id))
-        if user_info:
-            return user_info.get("name")
 
-    def get_userinfo_by_id(self, user_id, users):
+        return user['name']
+
+    def get_userinfo_by_id(self, user_id):
         """
         Retrieve the userinfo associated with a specific user ID.
 
@@ -102,7 +96,11 @@ class JSONDataManager(DataManagerInterface):
         Returns:
             dict: The user info associated with the user ID.
         """
-        users_info = users
+        data_dir = os.path.join(os.path.dirname(__file__), "../data")
+        file_path = os.path.join(data_dir, self.filename)
+        with open(file_path, 'r') as file:
+            users_info = json.load(file)
+
         user_info = users_info.get(str(user_id))
         return user_info
 
@@ -119,15 +117,16 @@ class JSONDataManager(DataManagerInterface):
         Raises:
             UserNotFoundError: If no user is associated with the user ID.
         """
-        users_data = self.get_all_users()
-        if str(user_id) not in users_data:
-            raise UserNotFoundError(f"User ID {user_id} does not exist")
-        user_info = users_data.get(user_id)
-        if user_info is None:
-            return {}
-        movies = user_info.get("movies", {})
+        data_dir = os.path.join(os.path.dirname(__file__), "../data")
+        file_path = os.path.join(data_dir, self.filename)
+        with open(file_path, 'r') as file:
+            users_info = json.load(file)
 
-        return movies
+        user = users_info.get(str(user_id))
+        if not user:
+            raise UserNotFoundError(f"User ID {user_id} does not exist")
+
+        return user.get('movies', {})
 
     def get_movie_by_id(self, user_id, movie_id):
         """

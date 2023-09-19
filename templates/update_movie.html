@@ -2,78 +2,72 @@
 <html>
 <head>
     <meta name="viewport" content="with=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;600;700&display=swap" rel="stylesheet">
     <title>Update Movie - MovieWeb App</title>
 </head>
 <body>
-    <section class="header">
+    <header>
         <h1>MY MOVIES WEB-APP</h1>
         <nav>
-            <div class="nav-links">
                 <ul>
                     <li><a href="/">HOME</a></li>
                     <li><a href="/users">USERS</a></li>
                     {% if current_user.is_authenticated %}
+                        {% set base_url = "/users/" %}
+                        {% set path = current_user.id %}
+                        <li><a href="{{ base_url ~ path }}">MOVIES</a></li>
                         <li>Welcome, {{ current_user.name }}! <a href="/logout">Logout</a></li>
                     {% endif %}
                 </ul>
-            </div>
         </nav>
-	</section>
-    <section class="page-display">
-    <div id="flash-messages" class="flashes">
-        {% with messages = get_flashed_messages() %}
+    </header>
+    <main class="center-content">
+        <div class="notification">
+            {% with messages = get_flashed_messages() %}
             {% if messages %}
-                {% for message in messages %}
-                    <div class="flash-message">{{ message }}</div>
-                {% endfor %}
+            {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+            {% endfor %}
             {% endif %}
-        {% endwith %}
-    </div>
+            {% endwith %}
+        </div>
 
-    <h1>Update Movie</h1>
-    <form action="/users/{{ user_id }}/update_movie/{{ movie_id }}" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{ movie_info.name }}" required>
+        <h1 class="big-heading">Update Movie</h1>
 
-        <br>
+        <form action="/users/{{ user_id }}/update_movie/{{ movie_id }}" method="post" class="input-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ movie_info.name }}" required><br>
 
-        <label for="year">Year:</label>
-        <input type="number" id="year" name="year" value="{{ movie_info.year }}" required>
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year" value="{{ movie_info.year }}" required><br>
 
-        <br>
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" name="rating" step="any" value="{{ movie_info.rating }}" required><br>
 
-        <label for="rating">Rating:</label>
-        <input type="number" id="rating" name="rating" step="any" value="{{ movie_info.rating }}" required>
+            <label for="director">Director:</label>
+            <input type="text" id="director" name="director" value="{{ movie_info.director }}" required><br>
 
-        <br>
+            <input type="submit" class="btn" value="Update Movie">
+        </form>
+    </main>
+    <script>
+        // Function to remove flashed messages after a certain duration (in milliseconds)
+        function removeFlashMessages() {
+            var flashMessages = document.querySelectorAll(".flash-message");
+            flashMessages.forEach(function (message) {
+                setTimeout(function () {
+                    message.remove();
+                }, 5000); // Adjust the duration (in milliseconds) to change how long the messages are displayed
+            });
+        }
 
-        <label for="director">Director:</label>
-        <input type="text" id="director" name="director" value="{{ movie_info.director }}" required>
-
-        <br>
-
-        <input type="submit" value="Update Movie">
-    </form>
-    </section>
-</body>
-<script>
-    // Function to remove flashed messages after a certain duration (in milliseconds)
-    function removeFlashMessages() {
-        var flashMessages = document.querySelectorAll(".flash-message");
-        flashMessages.forEach(function (message) {
-            setTimeout(function () {
-                message.remove();
-            }, 5000); // Adjust the duration (in milliseconds) to change how long the messages are displayed
+        // Call the function to remove flashed messages after the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            removeFlashMessages();
         });
-    }
-
-    // Call the function to remove flashed messages after the page loads
-    document.addEventListener("DOMContentLoaded", function () {
-        removeFlashMessages();
-    });
-</script>
+    </script>
+</body>
 </html>

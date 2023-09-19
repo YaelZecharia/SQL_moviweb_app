@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="with=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -8,57 +10,65 @@
     <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;600;700&display=swap" rel="stylesheet">
     <title>Add New User - MovieWeb App</title>
 </head>
+
 <body>
-    <section class="header">
+    <header>
         <h1>MY MOVIES WEB-APP</h1>
         <nav>
-            <div class="nav-links">
-                <ul>
-                    <li><a href="/">HOME</a></li>
-                    <li><a href="/users">USERS</a></li>
-                    {% if current_user.is_authenticated %}
-                        <li>Welcome, {{ current_user.name }}! <a href="/logout">Logout</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-        </nav>
-    </section>
-    <section class="page-display">
-        <div id="flash-messages" class="flashes">
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="flash-message">{{ message }}</div>
-                    {% endfor %}
+            <ul>
+                <li><a href="/">HOME</a></li>
+                <li><a href="/users">USERS</a></li>
+                {% if current_user.is_authenticated %}
+                <li><span class="welcome-text">Welcome, {{ current_user.name }}!</span><a href="/logout">Logout</a></li>
                 {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="notification">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
             {% endwith %}
         </div>
-        <h1>Add New User</h1>
-        <form action="/add_user" method="post">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required><br>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required><br>
-            <label for="confirm-password">Confirm Password:</label>
-            <input type="password" id="confirm-password" name="confirm-password" required><br>
-            <input type="submit" value="Add User">
-        </form>
-    </section>
-</body>
-<script>
-    // Function to remove flashed messages after a certain duration (in milliseconds)
-    function removeFlashMessages() {
-        var flashMessages = document.querySelectorAll(".flash-message");
-        flashMessages.forEach(function (message) {
-            setTimeout(function () {
-                message.remove();
-            }, 5000); // Adjust the duration (in milliseconds) to change how long the messages are displayed
-        });
-    }
+        <section class="intro">
+            <h1>Add New User</h1>
+            <form action="/add_user" method="post">
+                <div class="input-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <input type="submit" value="Add User" class="btn">
+            </form>
+        </section>
+    </main>
+    <script>
+        // Function to remove flashed messages after a certain duration (in milliseconds)
+        function removeFlashMessages() {
+            var flashMessages = document.querySelectorAll(".flash-message");
+            flashMessages.forEach(function (message) {
+                setTimeout(function () {
+                    message.remove();
+                }, 5000); // Adjust the duration (in milliseconds) to change how long the messages are displayed
+            });
+        }
 
-    // Call the function to remove flashed messages after the page loads
-    document.addEventListener("DOMContentLoaded", function () {
-        removeFlashMessages();
-    });
-</script>
+        // Call the function to remove flashed messages after the page loads
+        document.addEventListener("DOMContentLoaded", function () {
+            removeFlashMessages();
+        });
+    </script>
+</body>
+
 </html>
