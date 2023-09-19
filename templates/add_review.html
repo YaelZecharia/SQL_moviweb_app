@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Add Review - MovieWeb App</title>
+</head>
+
+<body>
+    <header>
+        <h1>MY MOVIES WEB-APP</h1>
+        <nav>
+                <ul>
+                    <li><a href="/">HOME</a></li>
+                    <li><a href="/users">USERS</a></li>
+                    {% if current_user.is_authenticated %}
+                        {% set base_url = "/users/" %}
+                        {% set path = current_user.id %}
+                        <li><a href="{{ base_url ~ path }}">MOVIES</a></li>
+                        <li>Welcome, {{ current_user.name }}! <a href="/logout">Logout</a></li>
+                    {% endif %}
+                </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="notification">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <div class="flash-message">{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <section class="intro">
+            <h1>Add Review for {{ movie_info.name }}</h1>
+            <form action="/users/{{ user_id }}/add_review/{{ movie_id }}" method="post">
+                <label for="review_text">Review:</label>
+                <input id="review_text" name="review_text" required value="{{ movie_info.review }}">
+
+                <br>
+
+                <label for="rating">Rating (1-10):</label>
+                <input type="number" step="any" id="rating" name="rating" required min="1" max="10" value="{{ movie_info.my_rating }}">
+
+                <br>
+
+                <input type="submit" class="btn" value="Submit Review">
+            </form>
+        </section>
+    </main>
+</body>
+<script>
+    // Function to remove flashed messages after a certain duration (in milliseconds)
+    function removeFlashMessages() {
+        var flashMessages = document.querySelectorAll(".flash-message");
+        flashMessages.forEach(function (message) {
+            setTimeout(function () {
+                message.remove();
+            }, 5000); // Adjust the duration (in milliseconds) to change how long the messages are displayed
+        });
+
+    }
+
+    // Call the function to remove flashed messages after the page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        removeFlashMessages();
+    });
+</script>
+</html>
