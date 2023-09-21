@@ -46,6 +46,15 @@ class SQLiteDataManager(DataManagerInterface):
         # Return the list of User objects
         return users
 
+    def get_all_movies(self):
+        """
+        Retrieves all movies from the SQL.
+        """
+        movies = db.session.query(Movie).all()
+
+        # Return the list of Movie objects
+        return movies
+
     def get_username_by_id(self, user_id):
         """
         Retrieve the username associated with a specific user ID.
@@ -429,4 +438,3 @@ class SQLiteDataManager(DataManagerInterface):
             })
 
         return reviews_list
-

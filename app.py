@@ -5,6 +5,7 @@ from flask_login import LoginManager, login_required, login_user, logout_user, c
 from datamanager.sql_data_manager import SQLiteDataManager, db, Movie, User, UserNotFoundError, UserAlreadyExists, MovieNotFound, \
     WrongPassword
 from datamanager.user_data_manager import User
+from api import api  # Importing the API blueprint
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -15,6 +16,7 @@ app.secret_key = os.getenv("SECRET_KEY")  # Get the secret key from environment 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+app.register_blueprint(api, url_prefix='/api')  # Registering the blueprint
 
 # Initialize the data manager object
 db_path = os.path.join(os.path.dirname(__file__), "data", "database_file.db")
@@ -40,7 +42,6 @@ def loader_user(user_id):
 # Define route for the home page
 @app.route('/')
 def home():
-    users = data_manager.get_all_users()
     return render_template('index.html')
 
 
