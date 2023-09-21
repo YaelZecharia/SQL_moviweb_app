@@ -182,6 +182,9 @@ def new_user():
     except WrongPassword:
         flash("Password needs to be at least 8 characters")
         return render_template('add_user.html')
+    except TypeError:
+        flash("Passwords don't match!")
+        return render_template('add_user.html')
 
 
 @app.route('/logout')
